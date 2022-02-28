@@ -1,0 +1,64 @@
+pipeline {
+
+    agent {
+        node {
+            label 'master'
+        }
+    }
+
+    tools { 
+        maven 'maven3' 
+    }
+
+    options {
+        buildDiscarder logRotator( 
+                    daysToKeepStr: '15', 
+                    numToKeepStr: '10'
+            )
+    }
+
+    environment {
+        APP_NAME = "STUDENT_APP"
+        APP_ENV  = "DEV"
+    }
+
+    stages {
+        
+        stage('21050668') {
+            steps {
+                cleanWs()
+                sh """
+                echo "stage 1 Completed-21050668"
+                """
+            }
+        }
+
+        stage('21050668') {
+            steps {
+                checkout([
+                    $class: 'GitSCM', 
+                    branches: [[name: '*/main']], 
+                    userRemoteConfigs: [[url: https://github.com/mfbsh/release-21050668-jenkinsfile.git']]
+		    sh """
+		    echo "stage 2 Completed-21050668"
+		    """
+                ])
+            }
+        }
+
+        stage('21050668') {
+            steps {
+                 sh 'mvn install -Dmaven.test.skip=true'
+            }
+        }
+
+        stage('21050668') {
+            steps {
+                sh """
+                env
+                """
+            }
+        }
+
+    }   
+}
